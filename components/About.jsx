@@ -1,97 +1,91 @@
-import { assets, infoList, toolsData } from '@/assets/assets'
-import Image from 'next/image'
-import React from 'react'
-import { motion } from "motion/react"
+import { assets, infoList, toolsData } from '@/assets/assets';
+import Image from 'next/image';
+import React from 'react';
+import { motion } from "motion/react";
 
-const About = ({isDarkMode}) => {
+const About = ({ isDarkMode }) => {
   return (
-    <motion.div id='about' className='w-full px-[12%] py-10 scroll-mt-20'
-    initial={{opacity: 0}}
-    whileInView={{opacity: 1}}
-    transition={{duration: 1}}
+    <motion.div
+      id='about'
+      className='w-full px-[12%] py-16 scroll-mt-20'
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 1 }}
     >
-      <motion.h4 
-      initial={{opacity: 0, y: -20}}
-      whileInView={{opacity: 1, y: 0}}
-      transition={{duration: 0.5, delay: 0.3}}
-      className='text-center mb-2 text-lg font-Ovo'>
-        Introduction</motion.h4>
+      <h2 className='text-4xl font-bold text-center mb-2'>About Me</h2>
+      <p className='text-center text-gray-500 dark:text-gray-400 mb-10'>Let me introduce myself.</p>
 
-      <motion.h2 
-      initial={{opacity: 0, y: -20}}
-      whileInView={{opacity: 1, y: 0}}
-      transition={{duration: 0.5, delay: 0.5}}
-      className='text-center text-5xl font-Ovo'>
-        About me</motion.h2>
+      {/* Profile and Bio */}
+      <div className='flex flex-col lg:flex-row items-center gap-12'>
+        {/* Profile Image */}
+        <div className='w-60 h-60 relative'>
+          <Image src={assets.user_image} alt='Ajaykumar Gunji' className='rounded-2xl object-cover' fill />
+        </div>
 
-        <motion.div 
-        initial={{opacity: 0}}
-        whileInView={{opacity: 1}}
-        transition={{duration: 0.8}}
-        className='flex w-full flex-col lg:flex-row items-center gap-20 my-20'>
-            <motion.div
-            initial={{opacity: 0, scale: 0.9}}
-            whileInView={{opacity: 1, scale: 1}}
-            transition={{duration: 0.6}}
-            className='w-64 sm:w-80 rounded-3xl max-w-none'>
-                <Image src={assets.user_image} alt='user' className='w-full rounded-3xl'/>
-            </motion.div>
-            <motion.div 
-            initial={{opacity: 0}}
-            whileInView={{opacity: 1}}
-            transition={{duration: 0.6, delay: 0.8}}
-            className='flex-1'>
-                <p className='mb-10 max-w-2xl font-Ovo'
-                >I am an experienced Full-Stack Developer with over a 4 years of professional expertise in the field. Throughout my career, I’ve worked with different teams and companies, helping them bring their ideas to life through clean code, intuitive design, and reliable backend systems. I enjoy working across the full stack—whether it’s crafting user-friendly interfaces or solving complex problems on the server side. Every project has been a chance to learn, grow, and contribute to something meaningful.</p>
+        {/* Bio */}
+        <div className='flex-1 text-base leading-relaxed'>
+          <p className='mb-4'>
+            I’m <strong>Ajaykumar Gunji</strong>, a Full-Stack Developer with over <strong>4 years of experience</strong>, and a Master’s degree in Computer Science from the University of Memphis.
+          </p>
+          <p className='mb-4'>
+            I specialize in building scalable and user-friendly applications using <strong>Java, React, Next.js</strong>, and modern web technologies.
+            I'm experienced with backend services, REST APIs, JWT authentication, and responsive UI development.
+          </p>
+          <p>
+            I enjoy solving real-world problems, collaborating with teams, and delivering clean, maintainable code.
+            I'm always curious and passionate about learning new tools and building practical solutions.
+          </p>
+        </div>
+      </div>
 
-                <motion.ul
-                initial={{opacity: 0}}
-                whileInView={{opacity: 1}}
-                transition={{duration: 0.8, delay: 1}}
-                className='grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl'>
-                    {infoList.map(({icon, iconDark, title, description}, index)=>(
-                        <motion.li 
-                        whileHover={{scale: 1.05}}
-                        className='border-[0.5px] border-gray-400 rounded-xl p-6 cursor-pointer hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:border-white dark:hover:shadow-white dark:hover:bg-darkHover/50'
-                         key={index}>
-                            <Image src={isDarkMode ? iconDark : icon} alt={title} className='w-7 mt-3'/>
-                            <h3 className='my-4 font-semibold text-gray-700 dark:text-white'>{title}</h3>
-                            <p className='text-gray-600 text-sm dark:text-white/80'>{description}</p>
-                        </motion.li>
-                    ))}
-                </motion.ul>
+      {/* Info Cards (Education, Languages, Projects) */}
+      <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto mt-16'>
+        {infoList.map(({ icon, iconDark, title, description }, index) => (
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            key={index}
+            className='border rounded-xl p-6 text-center shadow-md dark:border-white/20 dark:bg-darkHover/40 transition'
+          >
+            <Image src={isDarkMode ? iconDark : icon} alt={title} className='w-8 h-8 mx-auto mb-4' />
+            <h4 className='font-semibold text-lg mb-2'>{title}</h4>
+            <p className='text-sm text-gray-600 dark:text-white/80'>{description}</p>
+          </motion.div>
+        ))}
+      </div>
 
-                <motion.h4
-                initial={{ y: 20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1.3, duration: 0.5 }}
-                className='my-6 text-gray-700 font-Ovo dark:text-white/80'>Tools I use</motion.h4>
+      {/* Tools Section */}
+      <div className='mt-16'>
+        <h3 className='text-2xl font-semibold text-center mb-6'>🛠 Tools I Use</h3>
+        <ul className='flex flex-wrap justify-center gap-6'>
+          {toolsData.map((tool, index) => (
+            <li key={index} className='w-16 h-16 flex items-center justify-center border rounded-lg p-2 bg-white dark:bg-darkHover/30 shadow-md'>
+              <Image src={tool} alt="Tool" className="w-8 h-8" />
+            </li>
+          ))}
+        </ul>
+      </div>
 
-                <motion.ul
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 0.6 }}
-                className='flex items-center gap-3 sm:gap-5'>
-                    {toolsData.map((tool, index)=>(
-                        <motion.li 
-                        whileHover={{ scale: 1.1 }}
-                        className='flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500'
-                         key={index}>
-                            <Image src={tool} alt='Tool' className='w-5 sm:w-7'/>
-                        </motion.li>
-                    ))}
-                </motion.ul>
-
-                
+{/* Skills Section */}
+<div className="mt-20 max-w-5xl mx-auto">
+  <h3 className="text-2xl font-semibold text-center mb-6">💻 Core Skills</h3>
+  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 text-center">
+    {[
+      'Java', 'Python', 'JavaScript',
+      'React.js', 'Next.js', 'Node.js',
+      'MySQL', 'PostgreSQL', 'MongoDB',
+      'Git & GitHub', 'Microservices', 'JWT/Auth'
+    ].map((skill, index) => (
+      <div key={index} className="bg-white dark:bg-darkHover/30 border rounded-lg p-4 shadow-sm hover:shadow-md transition">
+        {skill}
+      </div>
+    ))}
+  </div>
+</div>
 
 
 
-
-
-            </motion.div>
-        </motion.div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default About
+export default About;
